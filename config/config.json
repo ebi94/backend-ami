@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "u4752624_ami",
+    "password": "0LASH3R4OTBY",
+    "database": "u4752624_ami_backend",
+    "host": "febritriakbar.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "u4752624_ami",
+    "password": "0LASH3R4OTBY",
+    "database": "u4752624_ami_backend",
+    "host": "febritriakbar.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "u4752624_ami",
+    "password": "0LASH3R4OTBY",
+    "database": "u4752624_ami_backend",
+    "host": "febritriakbar.com",
+    "dialect": "mysql"
+  }
+}
