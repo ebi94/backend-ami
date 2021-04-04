@@ -9,7 +9,9 @@ var siswasRouter = require('./routes/siswas');
 var muthowifRouter = require('./routes/muthowif');
 
 var app = express();
+var cors = require('cors')
 
+app.use(cors());
 // const siswas = require('./routes/siswas');
 // const muthowif = require('./routes/muthowif');
 // view engine setup
@@ -21,8 +23,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(
+  "/script-adminlte",
+  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
+);
 app.use('/', indexRouter);
 app.use('/siswas', siswasRouter);
 app.use('/muthowif', muthowifRouter);

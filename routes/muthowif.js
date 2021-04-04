@@ -1,6 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const model = require('../models/index');
+
+
+// var app = express();
+
+
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
 // GET muthowif listing.
 router.get('/', async function (req, res, next) {
     try {
@@ -44,7 +56,7 @@ router.post('/', async function (req, res, next) {
     if (muthowif) {
       res.status(201).json({
         'status': 'OK',
-        'messages': 'User berhasil ditambahkan',
+        'messages': 'Data berhasil ditambahkan',
         'data': muthowif,
       })
     }
