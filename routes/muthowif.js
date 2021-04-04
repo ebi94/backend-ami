@@ -44,12 +44,16 @@ router.post('/', async function (req, res, next) {
       const {
         first_name,
         last_name,
+        email,
+        password,
         phone,
         address
       } = req.body;
       const muthowif = await model.muthowif.create({
         first_name,
         last_name,
+        email,
+        password,
         phone,
         address
       });
