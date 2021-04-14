@@ -7,7 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var siswasRouter = require('./routes/siswas');
 var muthowifRouter = require('./routes/muthowif');
-
+var reservationRouter = require('./routes/reservation');
+var airlineRouter =  require('./routes/airline');
 var app = express();
 var cors = require('cors')
 
@@ -32,6 +33,8 @@ app.use(
 app.use('/', indexRouter);
 app.use('/siswas', siswasRouter);
 app.use('/muthowif', muthowifRouter);
+app.use('/reservation', reservationRouter);
+app.use('/airline', airlineRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
