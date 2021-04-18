@@ -31,6 +31,7 @@ router.get('/', async function (req, res, next) {
         })
       }
     } catch (err) {
+      console.log("error", err)
       res.json({
         'status': 'ERROR',
         'messages': err.message,
