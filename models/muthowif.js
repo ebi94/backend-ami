@@ -14,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   muthowif.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     email: DataTypes.STRING,
     phone: DataTypes.STRING,
-    address: DataTypes.STRING
+    password: DataTypes.STRING,
+    address: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'muthowif',

@@ -43,20 +43,22 @@ router.get('/', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
     try {
       const {
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         password,
         phone,
-        address
+        address,
+        status
       } = req.body;
       const muthowif = await model.muthowif.create({
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         password,
         phone,
-        address
+        address,
+        status
       });
     if (muthowif) {
       res.status(201).json({
