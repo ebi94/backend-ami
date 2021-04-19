@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var muthowifRouter = require('./routes/muthowif');
 var reservationRouter = require('./routes/reservation');
 var airlineRouter =  require('./routes/airline');
+var travelRouter = require('./routes/travel');
 var app = express();
 var cors = require('cors')
 
@@ -29,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/muthowif', muthowifRouter);
 app.use('/reservation', reservationRouter);
 app.use('/airline', airlineRouter);
+app.use('/travel', travelRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
