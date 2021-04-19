@@ -93,7 +93,7 @@ router.post('/', async function (req, res, next) {
    }
   });
 // UPDATE airline
-router.patch('/:id', function(req, res, next) {
+router.patch('/:id', async function(req, res, next) {
   try {
     const ailineId = req.params.id;
     const {
@@ -122,7 +122,7 @@ router.patch('/:id', function(req, res, next) {
   }
 });
 // DELETE airline
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', async function(req, res, next) {
   try {
     const airlineId = req.params.id;
     const airline = await model.airline.destroy({ where: {

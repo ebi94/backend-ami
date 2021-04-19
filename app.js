@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var siswasRouter = require('./routes/siswas');
 var muthowifRouter = require('./routes/muthowif');
 var reservationRouter = require('./routes/reservation');
 var airlineRouter =  require('./routes/airline');
@@ -13,13 +12,9 @@ var app = express();
 var cors = require('cors')
 
 app.use(cors());
-// const siswas = require('./routes/siswas');
-// const muthowif = require('./routes/muthowif');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-// app.use('/siswas', siswas);
-// app.use('/muthowif', muthowif);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,7 +26,6 @@ app.use(
   express.static(path.join(__dirname, "/node_modules/admin-lte/"))
 );
 app.use('/', indexRouter);
-app.use('/siswas', siswasRouter);
 app.use('/muthowif', muthowifRouter);
 app.use('/reservation', reservationRouter);
 app.use('/airline', airlineRouter);
