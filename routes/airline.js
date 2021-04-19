@@ -38,6 +38,36 @@ router.get('/', async function (req, res, next) {
       })
     }
   });
+// GET airline detail 
+router.get('/:id', async function (req, res, next) {
+  try {
+    const airline = await model.airline.findAll({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (airline.length !== 0) {
+      res.json({
+        'status': 'OK',
+        'messages': '',
+        'data': airline
+      })
+    } else {
+      res.json({
+        'status': 'ERROR',
+        'messages': 'EMPTY',
+        'data': {}
+      })
+    }
+  } catch (err) {
+    console.log("error", err)
+    res.json({
+      'status': 'ERROR',
+      'messages': err.message,
+      'data': {}
+    })
+  }
+});
 // POST airline
 router.post('/', async function (req, res, next) {
     try {
@@ -64,8 +94,53 @@ router.post('/', async function (req, res, next) {
   });
 // UPDATE airline
 router.patch('/:id', function(req, res, next) {
+  try {
+    const ailineId = req.params.id;
+    const {
+      code
+    } = req.body;
+    const ailine = await model.ailine.update({
+      code
+    }, {
+      where: {
+        id: ailineId
+      }
+    });
+    if (ailine) {
+      res.json({
+        'status': 'OK',
+        'messages': 'Data berhasil diupdate',
+        'data': ailine,
+      })
+    }
+  } catch (err) {
+    res.status(400).json({
+      'status': 'ERROR',
+      'messages': err.message,
+      'data': {},
+    })
+  }
 });
 // DELETE airline
 router.delete('/:id', function(req, res, next) {
+  try {
+    const airlineId = req.params.id;
+    const airline = await model.airline.destroy({ where: {
+      id: airlineId
+    }})
+    if (airline) {
+      res.json({
+        'status': 'OK',
+        'messages': 'Data berhasil dihapus',
+        'data': airline,
+      })
+    }
+  } catch (err) {
+    res.status(400).json({
+      'status': 'ERROR',
+      'messages': err.message,
+      'data': {},
+    })
+  }
 });
 module.exports = router;
