@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const model = require('../models/index');
+const bcrypt = require('bcryptjs');
 
 
 // var app = express();
@@ -85,7 +86,7 @@ router.post('/', async function (req, res, next) {
         firstName,
         lastName,
         email,
-        password,
+        password: bcrypt.hashSync(password, 8),
         phone,
         address,
         status
@@ -93,7 +94,7 @@ router.post('/', async function (req, res, next) {
     if (muthowif) {
       res.status(201).json({
         'status': 'OK',
-        'messages': 'Data berhasil ditambahkan',
+        'messages': 'Registrasi berhasil',
         'data': muthowif,
       })
     }
@@ -122,7 +123,7 @@ router.patch('/:id', async function(req, res, next) {
       firstName,
       lastName,
       email,
-      password,
+      password: bcrypt.hashSync(password, 8),
       phone,
       address,
       status
