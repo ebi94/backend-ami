@@ -123,7 +123,7 @@ router.patch('/:id', async function(req, res, next) {
       firstName,
       lastName,
       email,
-      password: bcrypt.hashSync(password, 8),
+      password,
       phone,
       address,
       status
