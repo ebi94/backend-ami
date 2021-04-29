@@ -20,7 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     password: DataTypes.STRING,
     address: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    gender: DataTypes.STRING,
+    dateOfBirthday: DataTypes.STRING,
+    describeProfile: DataTypes.STRING,
+    photoProfileUrl: DataTypes.STRING,
+    backgroundUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'muthowif',
