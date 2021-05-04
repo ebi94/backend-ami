@@ -17,7 +17,22 @@ const bcrypt = require('bcryptjs');
 // GET muthowif listing.
 router.get('/', async function (req, res, next) {
     try {
-        const muthowif = await model.muthowif.findAll({});
+        const muthowif = await model.muthowif.findAll({
+            attributes: [
+                'id',
+                'firstName',
+                'lastName',
+                'email',
+                'phone',
+                'address',
+                'gender',
+                'dateOfBirthday',
+                'describeProfile',
+                'photoProfileUrl',
+                'backgroundUrl',
+                'status'
+            ]
+        });
         if (muthowif.length !== 0) {
             res.json({
                 'status': 'OK',
@@ -44,6 +59,19 @@ router.get('/', async function (req, res, next) {
 router.get('/:id', async function (req, res, next) {
     try {
         const muthowif = await model.muthowif.findAll({
+            attributes: [
+                'firstName',
+                'lastName',
+                'email',
+                'phone',
+                'address',
+                'gender',
+                'dateOfBirthday',
+                'describeProfile',
+                'photoProfileUrl',
+                'backgroundUrl',
+                'status'
+            ],
             where: {
                 id: req.params.id
             }
@@ -70,7 +98,7 @@ router.get('/:id', async function (req, res, next) {
         })
     }
 });
-// POST muthowif
+// Register muthowif
 router.post('/', async function (req, res, next) {
     try {
         const {
@@ -167,6 +195,8 @@ router.patch('/:id', async function (req, res, next) {
         })
     }
 });
+// Change Password Muthowif 
+
 // DELETE muthowif
 router.delete('/:id', async function (req, res, next) {
     try {
