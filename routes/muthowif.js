@@ -2,7 +2,18 @@ const express = require('express');
 const router = express.Router();
 const model = require('../models/index');
 const bcrypt = require('bcryptjs');
+const nodemailer = require("nodemailer");
 
+const transporter = nodemailer.createTransport({
+    pool: true,
+    host: "asosiasiami.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: "no-reply@asosiasiami.com",
+        pass: "EVFIU8QV6BGJ"
+    }
+});
 
 // var app = express();
 
@@ -130,10 +141,34 @@ router.post('/', async function (req, res, next) {
             status
         });
         if (muthowif) {
-            res.status(201).json({
-                'status': 'OK',
-                'messages': 'Registrasi berhasil',
-                'data': muthowif,
+            const mailOptions = {
+                from: "no-reply@asosiasiami.com",
+                to: email,
+                subject: "Asosiasi AMI | Email Verification",
+                html: `
+                <h1 style="color: #5e9ca0; ">Confirm your Email</h1>
+                <h2 style = "color: #2e6c80;">Mohon klik link dibawah untuk konfimasi email anda:& nbsp;</h2>
+                <p><a href="https://backend-ami.herokuapp.com/auth/confirm/${email}">https://backend-ami.herokuapp.com/auth/confirm/${email}</a></p>
+                <p>&nbsp;</p>
+                <p><strong>Mohon untuk tidak membalas email ini</strong></p>
+                <p><strong>Terima Kasih. </strong></p>
+                <p><strong>&nbsp;</strong></p>`
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    res.status(400).json({
+                        'status': 'ERROR',
+                        'messages': error,
+                        'data': {},
+                    })
+                } else {
+                    res.status(201).json({
+                        'status': 'OK',
+                        'messages': 'Registrasi berhasil',
+                        'data': muthowif,
+                    })
+                }
             })
         }
     } catch (err) {
