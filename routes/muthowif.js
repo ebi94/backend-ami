@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const model = require('../models/index');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -126,6 +127,12 @@ router.post('/', async function (req, res, next) {
             backgroundUrl,
             status
         } = req.body;
+        const token = jwt.sign({
+            id: auth.id,
+            email: auth.email,
+        }, config.secret, {
+            expiresIn: 86400 // 24 hours
+        });
         const muthowif = await model.muthowif.create({
             firstName,
             lastName,
@@ -148,7 +155,7 @@ router.post('/', async function (req, res, next) {
                 html: `
                 <h1 style="color: #5e9ca0; ">Confirm your Email</h1>
                 <h2 style = "color: #2e6c80;">Mohon klik link dibawah untuk konfimasi email anda:& nbsp;</h2>
-                <p><a href="https://backend-ami.herokuapp.com/auth/confirm/${email}">https://backend-ami.herokuapp.com/auth/confirm/${email}</a></p>
+                <p><a href="https://asosiasiami.com/confirm/${token}${token}">https://asosiasiami.com/confirm/${token}${token}</a></p>
                 <p>&nbsp;</p>
                 <p><strong>Mohon untuk tidak membalas email ini</strong></p>
                 <p><strong>Terima Kasih. </strong></p>
