@@ -4,6 +4,8 @@ const model = require('../models/index');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const multer = require("multer");
+const path = require("path");
 
 const transporter = nodemailer.createTransport({
     pool: true,
@@ -82,6 +84,8 @@ router.get('/:id', async function (req, res, next) {
                 'describeProfile',
                 'photoProfileUrl',
                 'backgroundUrl',
+                'ktpUrl',
+                'npwpUrl',
                 'status'
             ],
             where: {
@@ -110,6 +114,91 @@ router.get('/:id', async function (req, res, next) {
         })
     }
 });
+
+// Upload Image KTP
+router.patch('/:id/upload-ktp', function (req, res) {
+    const muthowifId = req.params.id;
+
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname + './../public/images/ktp/'),
+        filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() +
+                path.extname(file.originalname));
+        }
+    });
+
+    const upload = multer({
+        storage: storage
+    }).single('imagektp');
+    upload(req, res, err => {
+        console.log('req image', req.file.filename)
+        try {
+            const muthowif = model.muthowif.update({
+                ktpUrl: req.file.filename,
+            }, {
+                where: {
+                    id: muthowifId
+                }
+            });
+            if (muthowif) {
+                res.status(200).json({
+                    'status': 'OK',
+                    'messages': 'Upload Berhasil',
+                    'data': muthowif,
+                })
+            }
+        } catch (err) {
+            res.status(400).json({
+                'status': 'ERROR',
+                'messages': err.message,
+                'data': {},
+            })
+        }
+    });
+});
+
+// Upload Image NPWP
+router.patch('/:id/upload-npwp', function (req, res) {
+    const muthowifId = req.params.id;
+
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname + './../public/images/npwp/'),
+        filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() +
+                path.extname(file.originalname));
+        }
+    });
+
+    const upload = multer({
+        storage: storage
+    }).single('imagenpwp');
+    upload(req, res, err => {
+        console.log('req image', req.file.filename)
+        try {
+            const muthowif = model.muthowif.update({
+                npwpUrl: req.file.filename,
+            }, {
+                where: {
+                    id: muthowifId
+                }
+            });
+            if (muthowif) {
+                res.status(200).json({
+                    'status': 'OK',
+                    'messages': 'Upload Berhasil',
+                    'data': muthowif,
+                })
+            }
+        } catch (err) {
+            res.status(400).json({
+                'status': 'ERROR',
+                'messages': err.message,
+                'data': {},
+            })
+        }
+    });
+});
+
 // Register muthowif
 router.post('/', async function (req, res, next) {
     try {
@@ -155,7 +244,7 @@ router.post('/', async function (req, res, next) {
                 html: `
                 <h1 style="color: #5e9ca0; ">Confirm your Email</h1>
                 <h2 style = "color: #2e6c80;">Mohon klik link dibawah untuk konfimasi email anda:& nbsp;</h2>
-                <p><a href="https://asosiasiami.com/confirm/${token}${token}">https://asosiasiami.com/confirm/${token}${token}</a></p>
+                <p><a href="https://asosiasiami.com/confirm/${token}">https://asosiasiami.com/confirm/${token}</a></p>
                 <p>&nbsp;</p>
                 <p><strong>Mohon untuk tidak membalas email ini</strong></p>
                 <p><strong>Terima Kasih. </strong></p>
@@ -263,4 +352,5 @@ router.delete('/:id', async function (req, res, next) {
         })
     }
 });
+
 module.exports = router;

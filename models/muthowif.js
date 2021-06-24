@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     dateOfBirthday: DataTypes.STRING,
     describeProfile: DataTypes.STRING,
     photoProfileUrl: DataTypes.STRING,
-    backgroundUrl: DataTypes.STRING
+    backgroundUrl: DataTypes.STRING,
+    ktpUrl: DataTypes.STRING,
+    npwpUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'muthowif',
