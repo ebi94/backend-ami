@@ -115,6 +115,90 @@ router.get('/:id', async function (req, res, next) {
     }
 });
 
+// Upload Image Photo
+router.patch('/:id/upload-photo', function (req, res) {
+    const muthowifId = req.params.id;
+
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname + './../public/images/photo/'),
+        filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() +
+                path.extname(file.originalname));
+        }
+    });
+
+    const upload = multer({
+        storage: storage
+    }).single('imagephoto');
+    upload(req, res, err => {
+        console.log('req image', req.file.filename)
+        try {
+            const muthowif = model.muthowif.update({
+                photoProfileUrl: req.file.filename,
+            }, {
+                where: {
+                    id: muthowifId
+                }
+            });
+            if (muthowif) {
+                res.status(200).json({
+                    'status': 'OK',
+                    'messages': 'Upload Berhasil',
+                    'data': muthowif,
+                })
+            }
+        } catch (err) {
+            res.status(400).json({
+                'status': 'ERROR',
+                'messages': err.message,
+                'data': {},
+            })
+        }
+    });
+});
+
+// Upload Image Background
+router.patch('/:id/upload-background', function (req, res) {
+    const muthowifId = req.params.id;
+
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname + './../public/images/background/'),
+        filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() +
+                path.extname(file.originalname));
+        }
+    });
+
+    const upload = multer({
+        storage: storage
+    }).single('imagebackground');
+    upload(req, res, err => {
+        console.log('req image', req.file.filename)
+        try {
+            const muthowif = model.muthowif.update({
+                backgroundUrl: req.file.filename,
+            }, {
+                where: {
+                    id: muthowifId
+                }
+            });
+            if (muthowif) {
+                res.status(200).json({
+                    'status': 'OK',
+                    'messages': 'Upload Berhasil',
+                    'data': muthowif,
+                })
+            }
+        } catch (err) {
+            res.status(400).json({
+                'status': 'ERROR',
+                'messages': err.message,
+                'data': {},
+            })
+        }
+    });
+});
+
 // Upload Image KTP
 router.patch('/:id/upload-ktp', function (req, res) {
     const muthowifId = req.params.id;
